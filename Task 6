@@ -1,0 +1,95 @@
+Task Reminder
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class TaskReminderApp {
+    static class Task {
+        private String title;
+        private LocalDate dueDate;
+        private boolean completed;
+
+        public Task(String title, LocalDate dueDate) {
+            this.title = title;
+            this.dueDate = dueDate;
+            this.completed = false;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public LocalDate getDueDate() {
+            return dueDate;
+        }
+
+        public boolean isCompleted() {
+            return completed;
+        }
+
+        public void markCompleted() {
+            completed = true;
+        }
+
+        @Override
+        public String toString() {
+            return "Task: " + title + ", Due Date: " + dueDate + ", Completed: " + completed;
+        }
+    }
+
+    public static void main(String[] args) {
+        List<Task> tasks = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Task Reminder Application");
+            System.out.println("1. Add Task");
+            System.out.println("2. View Tasks");
+            System.out.println("3. Mark Task as Completed");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter task title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter due date (YYYY-MM-DD): ");
+                    String dateStr = scanner.nextLine();
+                    LocalDate dueDate = LocalDate.parse(dateStr);
+                    Task task = new Task(title, dueDate);
+                    tasks.add(task);
+                    System.out.println("Task added.");
+                    break;
+                case 2:
+                    System.out.println("Tasks:");
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println((i + 1) + ". " + tasks.get(i));
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter the task number to mark as completed: ");
+                    int taskNumber = scanner.nextInt();
+                    if (taskNumber > 0 && taskNumber <= tasks.size()) {
+                        tasks.get(taskNumber - 1).markCompleted();
+                        System.out.println("Task marked as completed.");
+                    } else {
+                        System.out.println("Invalid task number.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
+
+
+
+
